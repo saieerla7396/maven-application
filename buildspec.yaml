@@ -1,0 +1,24 @@
+version: 0.2
+env:
+  variables:
+    DOCKER_RIGISTRY_USERNAME: "saieerla"
+    DOCKER_RIGIDTRY_PASSWORD: "Docker@123"
+    DOCKER_RIGISTRY_URL: "saieerla/mavan-app-qa" 
+phases:
+  pre_build:
+    commands:
+    - echo "loging into the Docker"
+    - docker login -u $DOCKER_RIGISTRY_USERNAME -p $DOCKER_RIGIDTRY_PASSWORD
+  build:
+    commands:
+    - echo "building image"
+    - docker build -t maven-web-application .
+    - docker tag maven-web-application saieerla/mavan-app-qa:maven-web-application
+    - echo "tagged the Docker image to Docker Hub..."
+  
+  post_build:
+    commands:
+    - echo "Pushing the Docker image to Docker Hub..."
+    - docker push saieerla/mavan-app-qa:maven-web-application
+    -  echo "Build success"
+    
